@@ -20,5 +20,4 @@ public class GUIElevadores extends JFrame{
         this.setVisible(true);
 
     }
-    
 }

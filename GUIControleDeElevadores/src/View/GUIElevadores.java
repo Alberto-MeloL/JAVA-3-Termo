@@ -1,12 +1,15 @@
 package View;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import java.awt.Color;
 import java.awt.Dimension;
 
 public class GUIElevadores extends JFrame{
 
     private Color corPretoFosco = new Color(54, 54, 54);
+    private JPanel elevadores;
 
     public GUIElevadores() {
         super("Simulador de Elevadores");
@@ -21,3 +24,4 @@ public class GUIElevadores extends JFrame{
 
     }
 }
+

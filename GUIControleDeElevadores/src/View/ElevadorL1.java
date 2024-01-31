@@ -35,6 +35,8 @@ public class ElevadorL1 extends JPanel {
         containerJButton = new JPanel();
         containerJButton.setLayout(new BoxLayout(containerJButton, BoxLayout.Y_AXIS));
 
+        Dimension tamanhoBotao = new Dimension(100,80);
+
         containerJButton.add(andarUm = new JButton("1"));
         containerJButton.add(andarDois = new JButton("2"));
         containerJButton.add(andarTres = new JButton("3"));
@@ -51,7 +53,7 @@ public class ElevadorL1 extends JPanel {
         ElevadorL1TableModel modelL1 = new ElevadorL1TableModel(elevadorL1Model);
         tabelaL1.setPreferredSize(new Dimension(600,200));
         tabelaL1 = new JTable(modelL1);
-
+tabelaL1.setRowHeight(50);
         containerElevadorL1.add(tabelaL1);
 
         add(containerElevadorL1);

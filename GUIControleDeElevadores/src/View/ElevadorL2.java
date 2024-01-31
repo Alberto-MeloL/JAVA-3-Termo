@@ -51,7 +51,7 @@ public class ElevadorL2 extends JPanel {
         ElevadorL2Model elevadorL2Model = new ElevadorL2Model();
         ElevadorL2TableModel modelL2 = new ElevadorL2TableModel(elevadorL2Model);
         tabelaL2 = new JTable(modelL2);
-
+        tabelaL2.setRowHeight(50);
         containerElevadorL2.add(tabelaL2);
 
         add(containerElevadorL2);

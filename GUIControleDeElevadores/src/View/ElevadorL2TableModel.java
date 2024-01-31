@@ -12,6 +12,7 @@ public ElevadorL2TableModel(ElevadorL2Model elevadorL2) {
     this.elevadorL2 = elevadorL2;
 }
 
+
 @Override
 public int getRowCount(){
     return elevadorL2.getAndarAtualL2().size();

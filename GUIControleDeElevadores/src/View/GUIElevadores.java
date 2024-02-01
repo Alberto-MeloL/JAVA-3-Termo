@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -35,8 +36,8 @@ public class GUIElevadores extends JFrame {
 
         elevadorL1 = new JLabel("L1");
         elevadorL2 = new JLabel("L2");
-        elevadorL1.setBorder(BorderFactory.createEmptyBorder(5,400,5,300));
-        elevadorL2.setBorder(BorderFactory.createEmptyBorder(5,400,5,400));
+        elevadorL1.setBorder(BorderFactory.createEmptyBorder(5,200,5,300));
+        elevadorL2.setBorder(BorderFactory.createEmptyBorder(5,300,5,200));
         elevadorL1.setFont(minhaFonte);
         elevadorL2.setFont(minhaFonte);
         elevadorL1.setForeground(corPretoFosco);

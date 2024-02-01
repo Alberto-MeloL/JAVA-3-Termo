@@ -3,6 +3,7 @@ package View;
 import View.ElevadorL2TableModel;
 import Model.ElevadorL2Model;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
@@ -22,6 +23,7 @@ public class ElevadorL2 extends JPanel {
     private JButton andarZero;
     private JButton subSolo1;
     private JButton subSolo2;
+    private String andarAtualL2;
     private JPanel containerJButton;
     private JPanel containerElevadorL2;
     private JTable tabelaL2 = new JTable();
@@ -31,7 +33,7 @@ public class ElevadorL2 extends JPanel {
         this.setLayout(new FlowLayout());
 
         containerElevadorL2 = new JPanel(new FlowLayout());
-        containerElevadorL2.setPreferredSize(new Dimension(600,800));
+        containerElevadorL2.setPreferredSize(new Dimension(300,800));
         containerJButton = new JPanel();
         containerJButton.setLayout(new BoxLayout(containerJButton, BoxLayout.Y_AXIS));
 

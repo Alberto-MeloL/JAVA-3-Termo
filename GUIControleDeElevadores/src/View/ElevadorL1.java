@@ -1,6 +1,5 @@
 package View;
 
-import View.ElevadorL1TableModel;
 import Model.ElevadorL1Model;
 
 import java.awt.Dimension;
@@ -10,7 +9,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;;
+import javax.swing.table.DefaultTableModel;
+
+import Controller.ControllerElevadorL1;;
 
 public class ElevadorL1 extends JPanel {
     private JButton andarUm;
@@ -30,8 +31,11 @@ public class ElevadorL1 extends JPanel {
         this.setSize(200, 200);
         this.setLayout(new FlowLayout());
 
+ElevadorL1Model model = new ElevadorL1Model();
+ElevadorL1 l1 = new ElevadorL1();
+ControllerElevadorL1 controllerL1 = new ControllerElevadorL1(this, model);
         containerElevadorL1 = new JPanel(new FlowLayout());
-        containerElevadorL1.setPreferredSize(new Dimension(600,800));
+        containerElevadorL1.setPreferredSize(new Dimension(300,800));
         containerJButton = new JPanel();
         containerJButton.setLayout(new BoxLayout(containerJButton, BoxLayout.Y_AXIS));
 
@@ -57,5 +61,42 @@ tabelaL1.setRowHeight(50);
         containerElevadorL1.add(tabelaL1);
 
         add(containerElevadorL1);
+    }
+
+    //////////
+    public JButton getAndarUm(){
+        return andarUm;
+    }
+    //////////
+    public JButton getAndarDois(){
+        return andarDois;
+    }
+    //////////
+    public JButton getAndarTres(){
+        return andarTres;
+    }
+    //////////
+    public JButton getAndarQuatro(){
+        return andarQuatro;
+    }
+    //////////
+    public JButton getAndarCinco(){
+        return andarCinco;
+    }
+    //////////
+    public JButton getAndarSeis(){
+        return andarSeis;
+    }
+    //////////
+    public JButton getAndarZero(){
+        return andarZero;
+    }
+    //////////
+    public JButton getSubSolo1(){
+        return subSolo1;
+    }
+    //////////
+    public JButton getSubSolo2(){
+        return subSolo2;
     }
 }

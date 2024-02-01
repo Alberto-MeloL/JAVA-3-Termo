@@ -24,7 +24,6 @@ public class GUIElevadores extends JFrame {
 
     public GUIElevadores() {
         super("Simulador de Elevadores");
-        this.setBackground(corPretoFosco);
         this.setSize(new Dimension(1800, 800));
         imagemFundo = new ImagemFundo("src/imagem/fundo-preto.png");
         imagemFundo.setLayout(new BorderLayout());
@@ -40,8 +39,8 @@ public class GUIElevadores extends JFrame {
         elevadorL2.setBorder(BorderFactory.createEmptyBorder(5,400,5,400));
         elevadorL1.setFont(minhaFonte);
         elevadorL2.setFont(minhaFonte);
-        elevadorL1.setForeground(corAmarela);
-        elevadorL2.setForeground(corAmarela);
+        elevadorL1.setForeground(corPretoFosco);
+        elevadorL2.setForeground(corPretoFosco);
 
         titulo.add(elevadorL1);
         titulo.add(elevadorL2);

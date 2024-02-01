@@ -52,7 +52,7 @@ ControllerElevadorL1 controllerL1 = new ControllerElevadorL1(this, model);
         containerJButton.add(subSolo2 = new JButton("-2"));
         containerElevadorL1.add(containerJButton);
         
-
+//lista,index%2
         ElevadorL1Model elevadorL1Model = new ElevadorL1Model();
         ElevadorL1TableModel modelL1 = new ElevadorL1TableModel(elevadorL1Model);
         tabelaL1.setPreferredSize(new Dimension(600,200));

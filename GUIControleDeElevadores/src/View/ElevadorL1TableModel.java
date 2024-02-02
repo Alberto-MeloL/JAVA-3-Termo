@@ -31,4 +31,6 @@ public class ElevadorL1TableModel extends AbstractTableModel {
     public String getColumnName(int index) {
         return colunas[index];
     }
+
+   
 }

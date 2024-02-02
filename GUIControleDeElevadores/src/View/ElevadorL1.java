@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import Controller.ControllerBotaoChamarELVD;
 import Controller.ControllerElevadorL1;;
 
 public class ElevadorL1 extends JPanel {
@@ -28,8 +29,10 @@ public class ElevadorL1 extends JPanel {
     private JPanel containerElevadorL1;
     private JTable tabelaL1 = new JTable();
     private ElevadorL1TableModel modelL1;
+    private ControllerBotaoChamarELVD controlador;
 
-    public ElevadorL1() {
+    public ElevadorL1(ControllerBotaoChamarELVD controlador) {
+        this.controlador = controlador;
         this.setSize(200, 200);
         this.setLayout(new FlowLayout());
 
@@ -38,7 +41,6 @@ public class ElevadorL1 extends JPanel {
         containerJButton = new JPanel();
         containerJButton.setLayout(new BoxLayout(containerJButton, BoxLayout.Y_AXIS));
 
-        Dimension tamanhoBotao = new Dimension(100,80);
 
         containerJButton.add(andarUm = new JButton("1"));
         containerJButton.add(andarDois = new JButton("2"));
@@ -50,15 +52,42 @@ public class ElevadorL1 extends JPanel {
         containerJButton.add(subSolo1 = new JButton("-1"));
         containerJButton.add(subSolo2 = new JButton("-2"));
 
-        andarUm.addActionListener(e -> selecionarAndarNaTabela(5));
-        andarDois.addActionListener(e -> selecionarAndarNaTabela(4));
-        andarTres.addActionListener(e -> selecionarAndarNaTabela(3));
-        andarQuatro.addActionListener(e -> selecionarAndarNaTabela(2));
-        andarCinco.addActionListener(e -> selecionarAndarNaTabela(1));
-        andarSeis.addActionListener(e -> selecionarAndarNaTabela(0));
-        andarZero.addActionListener(e -> selecionarAndarNaTabela(6));
-        subSolo1.addActionListener(e -> selecionarAndarNaTabela(7));
-        subSolo2.addActionListener(e -> selecionarAndarNaTabela(8));
+        andarUm.addActionListener(e -> {
+            selecionarAndarNaTabela(5);
+            controlador.chamarElevadorMaisProximo(1); // Exemplo de chamada ao controlador
+        });
+        andarDois.addActionListener(e -> {
+            selecionarAndarNaTabela(4);
+            controlador.chamarElevadorMaisProximo(2); // Exemplo de chamada ao controlador
+        });
+        andarTres.addActionListener(e -> {
+            selecionarAndarNaTabela(3);
+            controlador.chamarElevadorMaisProximo(3); // Exemplo de chamada ao controlador
+        });
+        andarQuatro.addActionListener(e -> {
+            selecionarAndarNaTabela(2);
+            controlador.chamarElevadorMaisProximo(4); // Exemplo de chamada ao controlador
+        });
+        andarCinco.addActionListener(e -> {
+            selecionarAndarNaTabela(1);
+            controlador.chamarElevadorMaisProximo(5); // Exemplo de chamada ao controlador
+        });
+        andarSeis.addActionListener(e -> {
+            selecionarAndarNaTabela(0);
+            controlador.chamarElevadorMaisProximo(6); // Exemplo de chamada ao controlador
+        });
+        andarZero.addActionListener(e -> {
+            selecionarAndarNaTabela(6);
+            controlador.chamarElevadorMaisProximo(7); // Exemplo de chamada ao controlador
+        });
+        subSolo1.addActionListener(e -> {
+            selecionarAndarNaTabela(7);
+            controlador.chamarElevadorMaisProximo(8); // Exemplo de chamada ao controlador
+        });
+        subSolo2.addActionListener(e -> {
+            selecionarAndarNaTabela(8);
+            controlador.chamarElevadorMaisProximo(5); // Exemplo de chamada ao controlador
+        });
         containerElevadorL1.add(containerJButton);
         
 //lista,index%2
@@ -108,7 +137,7 @@ tabelaL1.setRowHeight(50);
     public JButton getSubSolo2(){
         return subSolo2;
     }
-public List andarAtual(){
+public int andarAtual(){
     return andarAtual();
 }
     public ElevadorL1TableModel getTableModel() {

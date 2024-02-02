@@ -20,11 +20,10 @@ import Model.ElevadorL2Model;
 public class GUIElevadores extends JFrame {
 
     private Color corPretoFosco = new Color(54, 54, 54);
-    private Color corAmarela = new Color(255, 251, 20);
     private JPanel elevadores;
     private JPanel titulo;
-    private JLabel elevadorL1;
-    private JLabel elevadorL2;
+    private JLabel elevadorL1JP;
+    private JLabel elevadorL2JP;
     private int andarDeChamada; // Um valor padrão, ou você pode definir de outra forma
 
     public GUIElevadores() {
@@ -38,25 +37,25 @@ public class GUIElevadores extends JFrame {
         ElevadorL1Model elevadorL1Model = new ElevadorL1Model();
         ElevadorL2Model elevadorL2Model = new ElevadorL2Model();
 
-        elevadorL1 = new JLabel("L1");
-        elevadorL2 = new JLabel("L2");
-        elevadorL1.setBorder(BorderFactory.createEmptyBorder(5,200,5,300));
-        elevadorL2.setBorder(BorderFactory.createEmptyBorder(5,300,5,200));
-        elevadorL1.setFont(minhaFonte);
-        elevadorL2.setFont(minhaFonte);
-        elevadorL1.setForeground(corPretoFosco);
-        elevadorL2.setForeground(corPretoFosco);
+        elevadorL1JP = new JLabel("L1");
+        elevadorL2JP = new JLabel("L2");
+        elevadorL1JP.setBorder(BorderFactory.createEmptyBorder(5,200,5,300));
+        elevadorL2JP.setBorder(BorderFactory.createEmptyBorder(5,300,5,200));
+        elevadorL1JP.setFont(minhaFonte);
+        elevadorL2JP.setFont(minhaFonte);
+        elevadorL1JP.setForeground(corPretoFosco);
+        elevadorL2JP.setForeground(corPretoFosco);
 
-        titulo.add(elevadorL1);
-        titulo.add(elevadorL2);
-
-        ElevadorL1 elevadorL1 = new ElevadorL1();
         ControllerBotaoChamarELVD controlador = new ControllerBotaoChamarELVD(elevadorL1Model, elevadorL2Model);
+        ElevadorL2 elevadorL2 = new ElevadorL2(controlador);
+        ElevadorL1 elevadorL1 = new ElevadorL1(controlador);
         BotaoChamarElevador botaoChamar = new BotaoChamarElevador(e -> {
             controlador.chamarElevadorMaisProximo(andarDeChamada);
         });
+        titulo.add(elevadorL1);
+        titulo.add(elevadorL2);
+
         
-        ElevadorL2 elevadorL2 = new ElevadorL2();
         
       
         elevadores = new JPanel(new FlowLayout());

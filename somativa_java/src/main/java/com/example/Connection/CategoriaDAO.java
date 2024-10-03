@@ -29,7 +29,7 @@ public class CategoriaDAO {
     // Método para buscar categorias
     public List<Categoria> buscarCategorias(String nomeFiltro) {
         List<Categoria> categorias = new ArrayList<>();
-        String query = "SELECT * FROM categoria WHERE id = $1 AND categotia = $2";
+        String query = "SELECT * FROM categoria WHERE id = ? AND categotia = ?";
         
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, "%" + nomeFiltro + "%"); // Busca parcial

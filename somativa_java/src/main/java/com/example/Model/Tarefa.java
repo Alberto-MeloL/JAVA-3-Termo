@@ -18,6 +18,6 @@ public class Tarefa {
     private String descricao;
     private LocalDate dataVencimento;
     private String prioridade;
-    private String status;
+    private StatusTarefa status;
 
 }

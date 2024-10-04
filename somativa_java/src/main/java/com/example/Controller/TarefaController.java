@@ -2,6 +2,8 @@ package com.example.Controller;
 
 import java.sql.Connection;
 
+import java.util.List;
+
 import com.example.Connection.ConnectionFactory;
 import com.example.Connection.TarefaDAO;
 // import com.example.Model.Tarefa;
@@ -23,8 +25,8 @@ public class TarefaController {
     }
 
     // método para listar tarefa
-    public void listarTarefas() {
-        tarefaDAO.listarTarefas();
+    public List<String> obterTarefas() {
+        return tarefaDAO.listarTarefas();
     }
 
     // método para editar tarefa

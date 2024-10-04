@@ -1,7 +1,6 @@
 package com.example.Controller;
 
 import java.sql.Connection;
-import java.time.LocalDate;
 
 import com.example.Connection.ConnectionFactory;
 import com.example.Connection.TarefaDAO;
@@ -19,9 +18,8 @@ public class TarefaController {
     }
 
     // método para criar tarefa
-    public void criarTarefa(String titulo, String descricao, LocalDate dataVencimento, String prioridade,
-            String status) {
-        tarefaDAO.criarTarefa(titulo, descricao, dataVencimento, prioridade, status);
+    public void criarTarefa(String titulo) {
+        tarefaDAO.criarTarefa(titulo );
     }
 
     // método para listar tarefa
@@ -30,9 +28,8 @@ public class TarefaController {
     }
 
     // método para editar tarefa
-    public void editarTarefa(String buscarTarefa, String titulo, String descricao, LocalDate dataVencimento,
-            String prioridade) {
-        tarefaDAO.editarTarefa(buscarTarefa, titulo, descricao, dataVencimento, prioridade);
+    public void editarTarefa(String buscarTarefa, String titulo) {
+        tarefaDAO.editarTarefa(buscarTarefa, titulo);
     }
 
     // método para deletar tarefa

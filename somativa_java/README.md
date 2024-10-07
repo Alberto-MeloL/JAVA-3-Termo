@@ -10,12 +10,7 @@ Adição de novas tarefas.
 Edição de tarefas existentes.
 Exclusão de tarefas.
 Marcação de tarefas como concluídas.
-3. Organização de Tarefas:
-Classificação por categorias (ex: trabalho, pessoal).
-Prioridade (baixa, média, alta).
-Filtragem e busca de tarefas.
-4. Lembretes e Notificações: Opção para definir lembretes e receber notificações de tarefas próximas ao vencimento.
-Visualização de Tarefas: Diferentes modos de visualização, como lista e calendário.
+Visualização de Tarefas: Em lista.
 
 # Requisitos Não Funcionais
 1. Usabilidade: Interface intuitiva e fácil de usar.
@@ -28,12 +23,8 @@ __Inclusões__
 - Desenvolvimento da interface do usuário.
 - Implementação do banco de dados para armazenamento de dados das tarefas e usuários.
 - Funcionalidades básicas de gerenciamento de tarefas.
-- Integração com notificações (ex: e-mail ou push).
 - Testes de usabilidade e performance.
 - Exclusões
-- Integração com outras ferramentas de gerenciamento de projetos.
-- Recursos avançados de relatórios e análises de produtividade (poderão ser considerados em futuras versões).
-- Suporte a múltiplos idiomas (inicialmente apenas em português).
 
 __Entregáveis__
 
@@ -54,3 +45,34 @@ __Entregáveis__
 - **Usuário** (1:N) → **Tarefa**: Um usuário pode ter várias tarefas.
 - **Tarefa** (N:1) → **Categoria**: Uma tarefa pode pertencer a uma categoria.
 - **Tarefa** (1:N) → **Notificação**: Uma tarefa pode gerar várias notificações.
+
+# Manual do Usuário
+`Ao abrir o programa:`
+- Você vai se deparar com a tela principal do programa, onde tudo acontece. 
+
+`Do lado esquerdo`
+
+ __Na parte superior__
+
+  - É onde fica a lista das tarefas pendentes. 
+  
+__Na parte inferior__
+
+  - Aqui você pode adicionar, cancelar, editar e concluír suas tarefas, basta digitar o titulo(nome) da tarefa no campo de texto, e clicar em um botao, para tal ação.
+
+`Do lado direito`
+
+__Na parte superior__
+
+- Aqui temos um botão para limpar o seu histórico.
+
+__Na parte inferior__
+
+- Fica a lista do seu histórico.
+
+
+# Faltando
+- Aspecto Visual
+- Documentação Técnica
+- Testes e Validação 
+- Vídeo

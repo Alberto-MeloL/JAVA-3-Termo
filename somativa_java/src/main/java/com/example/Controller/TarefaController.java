@@ -29,19 +29,29 @@ public class TarefaController {
         return tarefaDAO.listarTarefas();
     }
 
+    // método para listar tarefas em status final
+    public List<String> obterTarefasStatusFinal() {
+        return tarefaDAO.listarTarefasStatusFinal();
+    }
+
     // método para editar tarefa
-    public void editarTarefa(String buscarTarefa, String titulo) {
-        tarefaDAO.editarTarefa(buscarTarefa, titulo);
+    public boolean editarTarefa(String buscarTarefa, String titulo) {
+        return tarefaDAO.editarTarefa(buscarTarefa, titulo);
     }
 
     // método para deletar tarefa
-    public void deletarTarefa(String buscarTarefa) {
-        tarefaDAO.deletarTarefa(buscarTarefa);
+    public boolean deletarTarefa(String buscarTarefa) {
+        return tarefaDAO.deletarTarefa(buscarTarefa);
     }
 
     // método para marcar como concluída
-    public void concluirTarefa(String buscarTarefa) {
-        tarefaDAO.concluirTarefa(buscarTarefa);
+    public boolean concluirTarefa(String buscarTarefa) {
+        return tarefaDAO.concluirTarefa(buscarTarefa);
+    }
+
+    // método para limpar o histórico
+    public void limparHistorico(){
+        tarefaDAO.limparHistorico();
     }
 
     public void closeConnection() {

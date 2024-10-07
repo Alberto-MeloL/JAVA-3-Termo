@@ -4,8 +4,6 @@ import javax.swing.*;
 import com.example.Controller.TarefaController;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TarefaView extends JFrame {
     private TarefaController tarefaController;

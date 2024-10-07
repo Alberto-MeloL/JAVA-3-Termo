@@ -17,43 +17,59 @@ public class TarefaDAO {
         this.connection = connection;
     }
 
-    // método para adicionar novas tarefas
-    public void criarTarefa(String titulo) {
-
-        String query = "INSERT INTO tarefa (titulo, status) VALUES (?,?)";
+    public boolean criarTarefa(String titulo) {
+        String checkQuery = "SELECT COUNT(*) FROM tarefa WHERE titulo = ?";
+        try (PreparedStatement checkStatement = connection.prepareStatement(checkQuery)) {
+            checkStatement.setString(1, titulo);
+            ResultSet resultSet = checkStatement.executeQuery();
+    
+            if (resultSet.next()) {
+                if (resultSet.getInt(1) > 0) {
+                    System.err.println("Essa tarefa já existe.");
+                    return false; // Sai do método caso já exista
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Sai do método em caso de erro
+        }
+    
+        String query = "INSERT INTO tarefa (titulo, status) VALUES (?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, titulo);
             preparedStatement.setObject(2, StatusTarefa.PENDENTE.name(), java.sql.Types.OTHER);
-
+    
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Tarefa criada com sucesso.");
-            }else {
+                return true;
+            } else {
                 System.err.println("Erro ao criar tarefa.");
+                return false;
             }
-           
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
+    
 
     // método para listar as tarefas
     public List<String> listarTarefas() {
         List<String> tarefas = new ArrayList<>();
         String query = "SELECT * FROM tarefa";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+                ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 String titulo = resultSet.getString("titulo");
-                tarefas.add(titulo);  // Adiciona o título à lista
+                tarefas.add(titulo); // Adiciona o título à lista
             }
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("Erro ao listar tarefas.");
         }
-        return tarefas;  // Retorna a lista de tarefas
+        return tarefas; // Retorna a lista de tarefas
     }
 
     // método para editar tarefa
@@ -104,7 +120,7 @@ public class TarefaDAO {
                             preparedStatementInsert.setString(1, buscarTarefa);
                             preparedStatementInsert.setObject(2, StatusTarefa.CANCELADO.name(), java.sql.Types.OTHER); // Status,
                                                                                                                        // pode
-                        
+
                             preparedStatementInsert.executeUpdate();
                         }
 
@@ -145,46 +161,48 @@ public class TarefaDAO {
             // inicia a transação
             connection.setAutoCommit(false);
 
-              try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            if (buscarTarefa != null && !buscarTarefa.isEmpty()) {
-                preparedStatement.setObject(1, StatusTarefa.CONCLUÍDO.name(), java.sql.Types.OTHER);
-                preparedStatement.setString(2, buscarTarefa);
-                int rowsAffected = preparedStatement.executeUpdate(); // o que isso me retorna
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                if (buscarTarefa != null && !buscarTarefa.isEmpty()) {
+                    preparedStatement.setObject(1, StatusTarefa.CONCLUÍDO.name(), java.sql.Types.OTHER);
+                    preparedStatement.setString(2, buscarTarefa);
+                    int rowsAffected = preparedStatement.executeUpdate(); // o que isso me retorna
 
-                if (rowsAffected > 0) {
-                    System.out.println("Tarefa marcada como concluida.");
-                    // Agora insere o registro na tabela de status final
-                    try (PreparedStatement preparedStatementInsert = connection.prepareStatement(queryInsertStatus)) {
-                        preparedStatementInsert.setString(1, buscarTarefa);
-                        preparedStatementInsert.setObject(2, StatusTarefa.CONCLUÍDO.name(), java.sql.Types.OTHER); // Status,
+                    if (rowsAffected > 0) {
+                        System.out.println("Tarefa marcada como concluida.");
+                        // Agora insere o registro na tabela de status final
+                        try (PreparedStatement preparedStatementInsert = connection
+                                .prepareStatement(queryInsertStatus)) {
+                            preparedStatementInsert.setString(1, buscarTarefa);
+                            preparedStatementInsert.setObject(2, StatusTarefa.CONCLUÍDO.name(), java.sql.Types.OTHER); // Status,
 
-                       int rowInserted = preparedStatementInsert.executeUpdate();
+                            int rowInserted = preparedStatementInsert.executeUpdate();
 
-                       if (rowInserted > 0) {
-                        try (PreparedStatement preparedStatementDelete = connection.prepareStatement(queryDelete)){
-                            preparedStatementDelete.setString(1, buscarTarefa);
-                            preparedStatementDelete.executeUpdate();
-                        } 
-                       }
+                            if (rowInserted > 0) {
+                                try (PreparedStatement preparedStatementDelete = connection
+                                        .prepareStatement(queryDelete)) {
+                                    preparedStatementDelete.setString(1, buscarTarefa);
+                                    preparedStatementDelete.executeUpdate();
+                                }
+                            }
+                        }
+
+                        // Confirma a transação
+                        connection.commit();
+
+                    } else {
+                        System.err.println("Erro ao marcar tarefa como concluida.");
                     }
-
-                    // Confirma a transação
-                    connection.commit();
-
                 } else {
-                    System.err.println("Erro ao marcar tarefa como concluida.");
+                    System.err.println("O titulo não pode ser vazio ou nulo.");
                 }
-            } else {
-                System.err.println("O titulo não pode ser vazio ou nulo.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.err.println("Erro ao marcar tarefa como concluida.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println("Erro ao marcar tarefa como concluida.");
         }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-      
+
     }
 
 }

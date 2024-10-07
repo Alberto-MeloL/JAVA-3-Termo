@@ -20,8 +20,8 @@ public class TarefaController {
     }
 
     // método para criar tarefa
-    public void criarTarefa(String titulo) {
-        tarefaDAO.criarTarefa(titulo );
+    public boolean criarTarefa(String titulo) {
+        return tarefaDAO.criarTarefa(titulo);
     }
 
     // método para listar tarefa

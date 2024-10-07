@@ -50,7 +50,7 @@ public class TarefaView extends JFrame {
         concluirCancelarField = new JTextField();
         concluirButton = new JButton("Concluir Tarefa");
         cancelarButton = new JButton("Cancelar Tarefa");
-
+        listarTarefas();
         cancelarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -65,7 +65,7 @@ public class TarefaView extends JFrame {
                 }
             }
         });
-
+       
         concluirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -97,16 +97,23 @@ public class TarefaView extends JFrame {
         adicionarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String titulo = tituloField.getText();
+                String titulo = tituloField.getText().trim(); // Remove espaços em branco
+        
                 if (!titulo.isEmpty()) {
-                    tarefaController.criarTarefa(titulo);
-                    listModel.addElement(titulo); // Adiciona à lista
-                    tituloField.setText(""); // Limpa o campo de entrada
+                    boolean tarefaCriada = tarefaController.criarTarefa(titulo);
+                    if (tarefaCriada) {
+                        listarTarefas();
+                        tituloField.setText(""); // Limpa o campo de entrada
+                    }else{
+                        JOptionPane.showMessageDialog(TarefaView.this, "A tarefa com este título já existe.");
+                    tituloField.setText("");
+                    }
                 } else {
                     JOptionPane.showMessageDialog(TarefaView.this, "O título não pode ser vazio.");
                 }
             }
         });
+        
 
         JPanel adicionarPanel = new JPanel();
         adicionarPanel.setLayout(new BorderLayout());

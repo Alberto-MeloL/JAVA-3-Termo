@@ -72,7 +72,4 @@ __Na parte inferior__
 
 
 # Faltando
-- Aspecto Visual
-- Documentação Técnica
-- Testes e Validação 
 - Vídeo

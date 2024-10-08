@@ -1,0 +1,114 @@
+@startuml
+actor "Usuário" as Usuario
+participant "TarefaView" as View
+participant "TarefaController" as Controller
+participant "TarefaDAO" as DAO
+participant "Banco de Dados" as DB
+
+== Adicionar Tarefa ==
+Usuario -> View: Clicar em "Adicionar Tarefa"
+View -> Controller: criarTarefa(titulo)
+Controller -> DAO: criarTarefa(titulo)
+DAO -> DB: Executar SELECT COUNT(*) FROM tarefa WHERE titulo = ?
+DB --> DAO: Retorna contagem
+alt Tarefa já existe
+    DAO -> Controller: Retorna false
+    Controller -> View: Exibir mensagem de erro
+else Tarefa não existe
+    DAO -> DB: Executar INSERT INTO tarefa (titulo, status) VALUES (?, 'PENDENTE')
+    DB --> DAO: Retorna linhas afetadas
+    alt Inserção bem-sucedida
+        DAO -> Controller: Retorna true
+        Controller -> View: Atualizar lista de tarefas
+        View -> Usuario: Exibir mensagem de sucesso
+    else Inserção falhou
+        DAO -> Controller: Retorna false
+        Controller -> View: Exibir mensagem de erro
+    end
+end
+
+== Editar Tarefa ==
+Usuario -> View: Clicar em "Editar Tarefa"
+View -> Controller: editarTarefa(buscarTarefa, tituloNovo)
+Controller -> DAO: editarTarefa(buscarTarefa, tituloNovo)
+DAO -> DB: Executar UPDATE tarefa SET titulo = ? WHERE titulo = ?
+DB --> DAO: Retorna linhas atualizadas
+alt Edição bem-sucedida
+    DAO -> Controller: Retorna true
+    Controller -> View: Atualizar lista de tarefas
+    View -> Usuario: Exibir mensagem de sucesso
+else Edição falhou
+    DAO -> Controller: Retorna false
+    Controller -> View: Exibir mensagem de erro
+end
+
+== Concluir Tarefa ==
+Usuario -> View: Clicar em "Concluir Tarefa"
+View -> Controller: concluirTarefa(titulo)
+Controller -> DAO: concluirTarefa(titulo)
+DAO -> DB: Executar SELECT COUNT(*) FROM tarefa WHERE titulo = ?
+DB --> DAO: Retorna contagem
+alt Tarefa não existe ou já foi concluída
+    DAO -> Controller: Retorna false
+    Controller -> View: Exibir mensagem de erro
+else Tarefa existe
+    DAO -> DB: Iniciar transação (SET AUTOCOMMIT = false)
+    DAO -> DB: Executar UPDATE tarefa SET status = 'CONCLUIDO' WHERE titulo = ?
+    DB --> DAO: Retorna linhas afetadas
+    alt Atualização bem-sucedida
+        DAO -> DB: Executar INSERT INTO status_final (nome_tarefa, status) VALUES (?, 'CONCLUÍDO')
+        DB --> DAO: Inserção realizada
+        DAO -> DB: Executar DELETE FROM tarefa WHERE titulo = ?
+        DB --> DAO: Deleção realizada
+        DAO -> DB: Confirmar transação (COMMIT)
+        DB --> DAO: Transação confirmada
+        DAO -> Controller: Retorna true
+        Controller -> View: Atualizar listas de tarefas
+        View -> Usuario: Exibir mensagem de sucesso
+    else Atualização falhou
+        DAO -> DB: Reverter transação (ROLLBACK)
+        DB --> DAO: Transação revertida
+        DAO -> Controller: Retorna false
+        Controller -> View: Exibir mensagem de erro
+    end
+end
+
+== Deletar Tarefa ==
+Usuario -> View: Clicar em "Cancelar Tarefa"
+View -> Controller: deletarTarefa(titulo)
+Controller -> DAO: deletarTarefa(titulo)
+DAO -> DB: Executar SELECT COUNT(*) FROM tarefa WHERE titulo = ?
+DB --> DAO: Retorna contagem
+alt Tarefa não existe
+    DAO -> Controller: Retorna false
+    Controller -> View: Exibir mensagem de erro
+else Tarefa existe
+    DAO -> DB: Iniciar transação (SET AUTOCOMMIT = false)
+    DAO -> DB: Executar DELETE FROM tarefa WHERE titulo = ?
+    DB --> DAO: Retorna linhas afetadas
+    alt Deleção bem-sucedida
+        DAO -> DB: Executar INSERT INTO status_final (nome_tarefa, status) VALUES (?, 'CANCELADO')
+        DB --> DAO: Inserção realizada
+        DAO -> DB: Confirmar transação (COMMIT)
+        DB --> DAO: Transação confirmada
+        DAO -> Controller: Retorna true
+        Controller -> View: Atualizar listas de tarefas
+        View -> Usuario: Exibir mensagem de sucesso
+    else Deleção falhou
+        DAO -> DB: Reverter transação (ROLLBACK)
+        DB --> DAO: Transação revertida
+        DAO -> Controller: Retorna false
+        Controller -> View: Exibir mensagem de erro
+    end
+end
+
+== Limpar Histórico ==
+Usuario -> View: Clicar em "Limpar Histórico"
+View -> Controller: limparHistorico()
+Controller -> DAO: limparHistorico()
+DAO -> DB: Executar DELETE FROM status_final
+DB --> DAO: Retorna linhas afetadas
+DAO -> Controller: Retorna void
+Controller -> View: Atualizar lista de histórico
+View -> Usuario: Exibir mensagem de sucesso
+@enduml

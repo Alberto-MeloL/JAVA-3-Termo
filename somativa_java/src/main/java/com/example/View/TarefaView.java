@@ -43,7 +43,7 @@ public class TarefaView extends JFrame {
     private void initialize() {
         // Criação da janela
         setTitle("Gerenciar Tarefas");
-        setSize(600, 400);
+        setSize(800, 500); // Aumentei o tamanho para melhor visualização
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(1, 2));
 
@@ -66,6 +66,34 @@ public class TarefaView extends JFrame {
         editarButton = new JButton("Editar Tarefa");
         limparHistoricoButton = new JButton("Limpar Histórico");
 
+        // Personalização das cores dos botões
+        adicionarButton = new JButton("Adicionar Tarefa");
+        adicionarButton.setBackground(new Color(76, 175, 80)); // Verde
+        adicionarButton.setForeground(Color.WHITE);
+        adicionarButton.setOpaque(true);
+        adicionarButton.setBorderPainted(false);
+
+        editarButton.setBackground(new Color(33, 150, 243)); // Azul
+        editarButton.setForeground(Color.WHITE);
+        editarButton.setOpaque(true);
+        editarButton.setBorderPainted(false);
+
+        concluirButton.setBackground(new Color(255, 152, 0)); // Laranja
+        concluirButton.setForeground(Color.WHITE);
+        concluirButton.setOpaque(true);
+        concluirButton.setBorderPainted(false);
+
+        cancelarButton.setBackground(new Color(244, 67, 54)); // Vermelho
+        cancelarButton.setForeground(Color.WHITE);
+        cancelarButton.setOpaque(true);
+        cancelarButton.setBorderPainted(false);
+
+        limparHistoricoButton.setBackground(new Color(158, 158, 158)); // Cinza
+        limparHistoricoButton.setForeground(Color.WHITE);
+        limparHistoricoButton.setOpaque(true);
+        limparHistoricoButton.setBorderPainted(false);
+
+        // Adicionando ActionListeners aos botões
         cancelarButton.addActionListener(e -> {
             String titulo = concluirCancelarField.getText().trim();
             System.out.println(titulo);
@@ -127,22 +155,29 @@ public class TarefaView extends JFrame {
                                               "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
+        
         limparHistoricoButton.addActionListener(e ->{
             tarefaController.limparHistorico();
             listarTarefasStatusFinal();
+            JOptionPane.showMessageDialog(TarefaView.this, "Histórico limpo com sucesso.");
         });
+
         tituloField = new JTextField();
-        adicionarButton = new JButton("Adicionar Tarefa");
+        
+        // Configuração do painel de conclusão e edição
         JPanel concluirPanel = new JPanel();
-        concluirPanel.setLayout(new BorderLayout());
-        concluirPanel.add(concluirCancelarField, BorderLayout.CENTER);
-        concluirPanel.add(adicionarButton, BorderLayout.PAGE_START);
-        concluirPanel.add(concluirButton, BorderLayout.EAST);
-        concluirPanel.add(cancelarButton, BorderLayout.WEST);
-        concluirPanel.add(editarButton, BorderLayout.SOUTH);
+        concluirPanel.setLayout(new GridLayout(2, 3, 5, 5)); // Grid com espaçamento
+
+        concluirPanel.add(new JLabel("Título da Tarefa:"));
+        concluirPanel.add(concluirCancelarField);
+        concluirPanel.add(adicionarButton);
+        concluirPanel.add(concluirButton);
+        concluirPanel.add(cancelarButton);
+        concluirPanel.add(editarButton);
+        
         panelEsquerdo.add(concluirPanel, BorderLayout.SOUTH);
 
-        // Painel direito para adicionar tarefas
+        // Painel direito para histórico de tarefas
         JPanel panelDireito = new JPanel();
         panelDireito.setLayout(new BorderLayout());
 
@@ -154,6 +189,7 @@ public class TarefaView extends JFrame {
                     concluirCancelarField.setText(""); // Limpa o campo de entrada
                     listarTarefas();
                     listarTarefasStatusFinal(); // Atualiza a lista de tarefas concluídas
+                    JOptionPane.showMessageDialog(TarefaView.this, "Tarefa criada com sucesso.");
                 } else {
                     JOptionPane.showMessageDialog(TarefaView.this, "A tarefa com este título já existe.");
                     tituloField.setText("");
@@ -165,7 +201,7 @@ public class TarefaView extends JFrame {
 
         JPanel adicionarPanel = new JPanel();
         adicionarPanel.setLayout(new BorderLayout());
-        adicionarPanel.add(limparHistoricoButton, BorderLayout.SOUTH);
+        adicionarPanel.add(limparHistoricoButton, BorderLayout.NORTH);
         panelDireito.add(adicionarPanel, BorderLayout.NORTH);
         panelDireito.add(scrollPaneStatusFinal, BorderLayout.CENTER);
 
